@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar()
+  email     String   @unique @db.VarChar()
+  cpfCnpj   Int      @db.Integer()
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+
+  @@map("customers")
+}
+
+model Product {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique @db.VarChar()
+  price     Float       @db.DoublePrecision()
+  stock     Int         @db.Integer()
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  OrderItem OrderItem[]
+
+  @@map("products")
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  status      String      @db.VarChar()
+  message     String      @db.VarChar()
+  customer    Customer    @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  customer_id Int
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  items       OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  product   Product?  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  product_id Int?
+  order     Order?    @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  order_id   Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("order_items")
+}
