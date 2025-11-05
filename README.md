@@ -31,16 +31,16 @@
 $ yarn install
 ```
 
+## .env setup
+
+DATABASE_URL="postgresql://janedoe:mypassword@localhost:5432/mydb?schema=sample"
+
 ## Prisma setup
 
 ```bash
 $ npx prisma generate
 $ npx prisma migrate dev
 ```
-
-## .env setup
-
-DATABASE_URL="postgresql://janedoe:mypassword@localhost:5432/mydb?schema=sample"
 
 ## Compile and run the project
 
