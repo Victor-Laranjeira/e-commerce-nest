@@ -18,7 +18,6 @@ export class CreateCustomerService {
         400
       );
     }
-    console.log(data.cpfCnpj.length)
     if (
       data.cpfCnpj.length !== 11 &&
       data.cpfCnpj.length !== 14
