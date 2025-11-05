@@ -12,13 +12,13 @@ import { ClientProxy } from "@nestjs/microservices";
 
 @Injectable()
 export class CreateOrderService {
-  constructor (
+  constructor(
     private readonly orderRepository: IOrderRepository,
     private readonly customerRepository: ICustomerRepository,
     private readonly productRepository: IProductRepository,
     private readonly orderItemRepository: IOrderItemRepository,
     @Inject('PAYMENT_SERVICE') private customer: ClientProxy,
-  ) {}
+  ) { }
 
   public async create(data: orderCreateDTO, customer_id: number): Promise<Order> {
     const customerExists = await this.customerRepository.findById(customer_id);
@@ -34,7 +34,7 @@ export class CreateOrderService {
         400
       );
     }
-    let productList: Product[] = []; 
+    let productList: Product[] = [];
     for (let i = 0; i < data.product_name.length; i++) {
       const productExists = await this.productRepository.findByName(data.product_name[i]);
       if (!productExists) {
@@ -45,9 +45,15 @@ export class CreateOrderService {
       }
       productList.push(productExists);
     }
-    const createOrder = await this.orderRepository.create('PENDING_PAYMENT', 'message', customerExists.id);
+    const createOrder = await this.orderRepository.create('PENDING_PAYMENT', customerExists.id);
     let orderItemList: OrderItem[] = [];
     for (let i = 0; i < productList.length; i++) {
+      if (!data.quantity[i]) {
+        throw new AppError(
+          `Não foi selecionado quantidade para o produto ${productList[i].name}`,
+          400
+        );
+      }
       orderItemList.push({
         quantity: data.quantity[i],
         product_id: productList[i].id,
@@ -62,14 +68,14 @@ export class CreateOrderService {
         400
       );
     }
-    this.customer.emit('order_created', {
-      orderId: order.id,
-      customerId: order.customer_id,
-      items: orderItemList.map((item) => ({
-        product_id: item.product_id,
-        quantity: item.quantity,
-      })),
-    });
+    // this.customer.emit('order_created', {
+    //   orderId: order.id,
+    //   customerId: order.customer_id,
+    //   items: orderItemList.map((item) => ({
+    //     product_id: item.product_id,
+    //     quantity: item.quantity,
+    //   })),
+    // });
     return order;
   }
 }

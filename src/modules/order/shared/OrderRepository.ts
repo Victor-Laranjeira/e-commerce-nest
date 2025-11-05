@@ -1,28 +1,23 @@
 import { PrismaService } from "src/modules/prisma/prisma.service";
 import { IOrderRepository } from "./abstract_class/IOrderRepository";
 import { Order } from "./models/Order";
-import { orderCreateDTO } from "../create_order/dto/orderCreateDTO";
-import { OrderItem } from "src/modules/order_item/shared/models/OrderItem";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
 class OrderRepository implements IOrderRepository {
-  constructor (
+  constructor(
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   public async create(
     status: string,
-    message: string, 
     customer_id: number,
-    // order_items: OrderItem
   ): Promise<Order> {
     const order = await this.prisma
       .getPrismaClient()
       .order.create({
         data: {
           status: status,
-          message: message,
           customer_id: customer_id,
         },
         include: {
@@ -43,7 +38,21 @@ class OrderRepository implements IOrderRepository {
           items: true,
         }
       });
-      return order;
+    return order;
+  }
+
+  public async getAllByUserId(user_id: number): Promise<Order[]> {
+    const order = await this.prisma
+      .getPrismaClient()
+      .order.findMany({
+        where: {
+          customer_id: user_id,
+        },
+        include: {
+          items: true,
+        },
+      });
+    return order;
   }
 }
 

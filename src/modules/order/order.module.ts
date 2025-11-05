@@ -11,6 +11,8 @@ import { IProductRepository } from "../product/shared/abstract_class/IProductRep
 import { ICustomerRepository } from "../customer/shared/abstract_class/ICustomerRepository";
 import { IOrderRepository } from "./shared/abstract_class/IOrderRepository";
 import { ClientsModule, Transport } from "@nestjs/microservices";
+import { GetOrderController } from "./get_order/controller/get_order.controller";
+import { GetOrderService } from "./get_order/service/get_order.service";
 
 @Module({
   imports: [
@@ -27,9 +29,11 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
   ],
   controllers: [
     CreateOrderController,
+    GetOrderController,
   ],
   providers: [
     CreateOrderService,
+    GetOrderService,
     {
       provide: IOrderRepository,
       useClass: OrderRepository,
@@ -49,4 +53,4 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
     PrismaService,
   ],
 })
-export class OrderModule {}
+export class OrderModule { }

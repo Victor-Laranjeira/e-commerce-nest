@@ -6,9 +6,9 @@ import { ICustomerRepository } from "../../shared/abstract_class/ICustomerReposi
 
 @Injectable()
 export class CreateCustomerService {
-  constructor (
+  constructor(
     private readonly customerRepository: ICustomerRepository,
-  ) {}
+  ) { }
 
   public async create(data: customerCreateDTO): Promise<Customer> {
     const customerExists = await this.customerRepository.findByEmail(data.email);
@@ -18,9 +18,10 @@ export class CreateCustomerService {
         400
       );
     }
+    console.log(data.cpfCnpj.length)
     if (
-      data.cpfCnpj.toString().length !== 11 ||
-      data.cpfCnpj.toString().length !== 14 
+      data.cpfCnpj.length !== 11 &&
+      data.cpfCnpj.length !== 14
     ) {
       throw new AppError(
         'Cpf ou Cnpj inválido.',

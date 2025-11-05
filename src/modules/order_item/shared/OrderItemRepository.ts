@@ -5,9 +5,9 @@ import { PrismaService } from "src/modules/prisma/prisma.service";
 
 @Injectable()
 class OrderItemRepository implements IOrderItemRepository {
-  constructor (
+  constructor(
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   public async createMany(data: OrderItem[]): Promise<void> {
     await this.prisma.getPrismaClient().orderItem.createMany({
@@ -26,30 +26,6 @@ class OrderItemRepository implements IOrderItemRepository {
         }
       });
   }
-  // public async update(id: number, order_id: number): Promise<OrderItem> {
-  //   const orderItem = await this.prisma
-  //     .getPrismaClient()
-  //     .orderItem.update({
-  //       where: {
-  //         id: id,
-  //       },
-  //       data: {
-  //         order_id: order_id
-  //       }
-  //     })
-  // }
-
-  // public async findByUserId(product_id: number, order_id: number): Promise<OrderItem[] | null> {
-  //   const orderItem = await this.prisma
-  //     .getPrismaClient()
-  //     .orderItem.findMany({
-  //       where: {
-  //         productId: product_id,
-  //         orderId: order_id,
-  //       }
-  //     });
-  //   return orderItem;
-  // }
 }
 
 export { OrderItemRepository };

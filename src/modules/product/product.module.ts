@@ -19,4 +19,4 @@ import { IProductRepository } from "./shared/abstract_class/IProductRepository";
     PrismaService,
   ],
 })
-export class ProductModule {}
+export class ProductModule { }

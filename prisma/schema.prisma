@@ -19,7 +19,7 @@ model Customer {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar()
   email     String   @unique @db.VarChar()
-  cpfCnpj   Int      @db.Integer()
+  cpfCnpj   String        @db.VarChar(14)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   orders    Order[]
@@ -42,7 +42,6 @@ model Product {
 model Order {
   id          Int         @id @default(autoincrement())
   status      String      @db.VarChar()
-  message     String      @db.VarChar()
   customer    Customer    @relation(fields: [customer_id], references: [id], onDelete: Cascade)
   customer_id Int
   createdAt   DateTime    @default(now())

@@ -5,9 +5,9 @@ import { CreateCustomerService } from "../service/create_customer.service";
 
 @Controller('customer')
 export class CreateCustomerController {
-  constructor (
+  constructor(
     private readonly createCustomerService: CreateCustomerService,
-  ) {}
+  ) { }
 
   @Post()
   public async create(

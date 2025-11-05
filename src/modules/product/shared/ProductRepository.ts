@@ -6,25 +6,25 @@ import { Product } from "./models/Product";
 
 @Injectable()
 class ProductRepository implements IProductRepository {
-  constructor (private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   public async create(data: productCreateDTO): Promise<Product> {
     const product = await this.prisma
-    .getPrismaClient()
-    .product.create({
-      data,
-    });
+      .getPrismaClient()
+      .product.create({
+        data,
+      });
     return product;
   }
 
   public async findByName(name: string): Promise<Product | null> {
     const product = await this.prisma
-    .getPrismaClient()
-    .product.findFirst({
-      where: {
-        name: name,
-      },
-    });
+      .getPrismaClient()
+      .product.findFirst({
+        where: {
+          name: name,
+        },
+      });
     return product;
   }
 }

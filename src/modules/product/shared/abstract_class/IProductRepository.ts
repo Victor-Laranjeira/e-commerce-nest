@@ -3,7 +3,7 @@ import { Product } from "../models/Product";
 
 abstract class IProductRepository {
   abstract create(data: productCreateDTO): Promise<Product>;
-  abstract findByName(name: string) : Promise<Product | null>
+  abstract findByName(name: string): Promise<Product | null>
 }
 
 export { IProductRepository }
