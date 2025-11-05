@@ -31,36 +31,38 @@
 
 ### Customer
 - **POST /customer
-
-- Body
-- {
--   "name": "Victor",
--   "email": "victor@email.com",
--   "cpfCnpj": "12345678901"
-- }
+```bash
+$ Body
+$ {
+$   "name": "Victor",
+$   "email": "victor@email.com",
+$   "cpfCnpj": "12345678901"
+$ }
+```
 
 ### Product
 - **POST /product
-
-- Body
-- {
--    "name": "Queijo",
--    "price": 15.90,
--    "stock": 50
-- }
+```bash
+$ Body
+$ {
+$    "name": "Queijo",
+$    "price": 15.90,
+$    "stock": 50
+$ }
+```
 
 ### Order
 - **POST /customer/:customerId/order
+```bash
+$ Body
+$ {
+$    "status": "status",
+$    "quantity": [2, 5, 3],
+$    "product_name": ["Leite", "Chocolate", "Queijo"]
+$ }
 
-- Body
-- {
--    "status": "status",
--    "quantity": [2, 5, 3],
--    "product_name": ["Leite", "Chocolate", "Queijo"]
-- }
-
-- **GET /customer/:customerId/order
-
+$ **GET /customer/:customerId/order
+```
 
 ## Project setup
 
