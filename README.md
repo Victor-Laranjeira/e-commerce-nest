@@ -25,6 +25,43 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Endpoints da API
+
+### Rota base - http://localhost:3000
+
+### Customer
+- **POST /customer
+
+- Body
+- {
+-   "name": "Victor",
+-   "email": "victor@email.com",
+-   "cpfCnpj": "12345678901"
+- }
+
+### Product
+- **POST /product
+
+- Body
+- {
+-    "name": "Queijo",
+-    "price": 15.90,
+-    "stock": 50
+- }
+
+### Order
+- **POST /customer/:customerId/order
+
+- Body
+- {
+-    "status": "status",
+-    "quantity": [2, 5, 3],
+-    "product_name": ["Leite", "Chocolate", "Queijo"]
+- }
+
+- **GET /customer/:customerId/order
+
+
 ## Project setup
 
 ```bash
